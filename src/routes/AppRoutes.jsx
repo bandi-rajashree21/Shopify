@@ -2,6 +2,8 @@
 import { Route, Routes } from "react-router";
 import Home from "../pages/Home/Home";
 import ProductList from "../pages/ProductList/ProductList";
+import Login from "../pages/Authentication/Login";
+import Signup from "../pages/Authentication/Signup";
 
 function AppRoutes() {
 
@@ -9,6 +11,8 @@ function AppRoutes() {
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/products" element={<ProductList />} />
+            <Route path="/signin" element={<Login/>}/>
+            <Route path="/signup" element={<Signup/>}/>
             <Route path="*" element={<Error />}/>
         </Routes>
     )
