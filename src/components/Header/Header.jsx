@@ -14,6 +14,7 @@ import {
 
 // CSS import
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 function Header(props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,8 +24,8 @@ function Header(props) {
   return (
     <div>
       <Navbar {...props}>
-        <NavbarBrand href="/" id="title">
-          Shopify
+        <NavbarBrand id="title">
+          <Link to="/">Shopify</Link>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
