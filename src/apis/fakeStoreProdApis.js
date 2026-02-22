@@ -14,3 +14,7 @@ export function getProduct(id)
 {
     return `https://fakestoreapi.com/products/${id}`;
 }
+
+export function signup() {
+    return `https://fakestoreapi.com/users`;
+}
