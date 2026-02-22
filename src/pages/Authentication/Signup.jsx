@@ -8,8 +8,6 @@ function Signup() {
 
     const navigate = useNavigate();
 
-    const [resetSignUpForm, setResetSignUpForm] = useState(false);
-
     async function onAuthFormSubmit(authArguments,resetForm) {
         try {
             await axios.post(signup(), {
@@ -33,7 +31,7 @@ function Signup() {
             <div className="login-wrapper" id="loginForm">
                 <h4 className="text-center">Signup</h4>
                 <Auth  onSubmit={onAuthFormSubmit}
-                    resetForm={resetSignUpForm}/>
+                />
                 <div className="signup-btn text-center" id="showSignupBtn">
                     <Link  to="/signin">
                         Already have an Account? Sign In Here

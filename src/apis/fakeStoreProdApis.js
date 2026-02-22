@@ -18,3 +18,7 @@ export function getProduct(id)
 export function signup() {
     return `https://fakestoreapi.com/users`;
 }
+
+export function sigin() {
+    return `https://fakestoreapi.com/auth/login`;
+}
