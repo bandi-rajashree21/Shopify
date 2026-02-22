@@ -1,22 +1,25 @@
 // CSS import
 import './ProductList.css';
 
-import ProductImage from '../../assets/product.png'
 import ProductBox from '../../components/ProductBox/ProductBox';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getAllProducts, getAllProductsByCategory } from '../../apis/fakeStoreProdApis';
 
 function ProductList() {
    const [productList, setProductList] = useState(null);
+   const [query]=useSearchParams();
 
-    async function downloadProducts() {
-        const response = await axios.get(`https://fakestoreapi.com/products`);
+    async function downloadProducts(category) {
+       const downloadUrl= category ? getAllProductsByCategory(category) : getAllProducts();
+        const response = await axios.get(downloadUrl);
         setProductList(response.data);
         console.log(response.data);
     }
 
     useEffect(() => {
-        downloadProducts();
+        downloadProducts(query.get("category"));
     }, []) 
     return (
         <div className='container'>
