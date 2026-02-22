@@ -30,6 +30,7 @@ function ProductList() {
                     <div className='product-list-box' id='productList'>
 
                         {productList && productList.map((product)=><ProductBox key={product.id} 
+                                            productId={product.id}
                                             name={product.title}
                                             price={product.price}
                                             productImage={product.image}/>)}
