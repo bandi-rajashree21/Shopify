@@ -10,7 +10,7 @@ function Signup() {
 
     const [resetSignUpForm, setResetSignUpForm] = useState(false);
 
-    async function onAuthFormSubmit(authArguments) {
+    async function onAuthFormSubmit(authArguments,resetForm) {
         try {
             await axios.post(signup(), {
                 username: authArguments.username,
@@ -20,7 +20,7 @@ function Signup() {
             navigate('/signin');
         } catch(error) {
             console.log(error);
-            setResetSignUpForm(true);
+            resetForm()
         }
     }
     return (
