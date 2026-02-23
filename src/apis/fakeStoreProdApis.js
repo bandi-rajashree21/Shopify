@@ -22,3 +22,8 @@ export function signup() {
 export function sigin() {
     return `https://fakestoreapi.com/auth/login`;
 }
+
+export function getCartByUser(userId)
+{
+    return `https://fakestoreapi.com/carts/user/${userId}`
+}

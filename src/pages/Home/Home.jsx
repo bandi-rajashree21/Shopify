@@ -1,12 +1,19 @@
 // CSS imports
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CategoryItem from '../../components/CategoryItem/CategoryItem';
 import './Home.css';
 import axios from 'axios';
 import { getAllCategories } from '../../apis/fakeStoreProdApis';
+import UserContext from '../../context/UserContext';
+import useCart from '../../hooks/useCart';
 
 function Home() {
     const [categories,setCategories]=useState(null);
+     const {user} = useContext(UserContext);
+    const [cart] = useCart(user ? user.id : undefined);
+
+    useEffect(() => {
+    }, [user]);
 
     async function downloadCategories()
     {

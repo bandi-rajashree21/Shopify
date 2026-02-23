@@ -1,5 +1,5 @@
 // CSS imports
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ProductDetails.css';
 import { useEffect, useState } from 'react';
 import { getProduct } from '../../apis/fakeStoreProdApis';
@@ -81,9 +81,9 @@ function ProductDetails() {
                             </div>
 
                             <div className="product-details-action btn btn-primary text-decoration-non">Add to cart</div>
-                            <a href="cart.html" id="goToCartBtn" className="product-details-action btn btn-warning text-decoration-none">
+                            <Link to="/cart" id="goToCartBtn" className="product-details-action btn btn-warning text-decoration-none">
                                 Go to cart
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 )}

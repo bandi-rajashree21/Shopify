@@ -4,14 +4,16 @@ import Auth from '../../components/Auth/Auth';
 import './Auth.css';
 import axios from 'axios';
 import { sigin } from '../../apis/fakeStoreProdApis';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import {jwtDecode} from "jwt-decode";
+import UserContext from '../../context/UserContext';
 
 function Login() {
       const authRef = useRef(null);
        const navigate = useNavigate();
     const [token, setToken] = useCookies(['jwt-token']);
+    const {setUser}=useContext(UserContext);
     async function onAuthFormSubmit(formDetails) {
         try {
             const response = await axios.post(sigin(), {
@@ -20,6 +22,7 @@ function Login() {
                 password: formDetails.password
             }); 
             const tokenDetails=jwtDecode(response.data.token);
+            setUser({username:tokenDetails.user,id:tokenDetails.id});
             console.log(tokenDetails);
             setToken('jwt-token', response.data.token, {httpOnly: true});
             navigate('/');
