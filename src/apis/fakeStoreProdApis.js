@@ -27,3 +27,11 @@ export function getCartByUser(userId)
 {
     return `https://fakestoreapi.com/carts/user/${userId}`
 }
+
+export function createCart() {
+    return 'https://fakestoreapi.com/carts';
+}
+
+export function updateCart(cartId) {
+    return `https://fakestoreapi.com/carts/${cartId}`;
+}

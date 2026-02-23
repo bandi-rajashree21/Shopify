@@ -1,16 +1,22 @@
 // CSS imports
 import { useParams, Link } from 'react-router-dom';
 import './ProductDetails.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { getProduct } from '../../apis/fakeStoreProdApis';
+import UserContext from '../../context/UserContext';
+import CartContext from '../../context/CartContext';
 import axios from 'axios';
 
 function ProductDetails() {
     const {id} = useParams();
+    const { user } = useContext(UserContext);
+    const { cart, setCart } = useContext(CartContext);
 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [addingToCart, setAddingToCart] = useState(false);
+    const [addedToCart, setAddedToCart] = useState(false);
 
     async function downloadProduct(id) {
         try {
@@ -31,6 +37,66 @@ function ProductDetails() {
     useEffect(() => {
         downloadProduct(id);
     }, [id]);
+
+    async function addToCart() {
+        if (!user) {
+            alert('Please login to add items to cart');
+            return;
+        }
+
+        if (!product) {
+            return;
+        }
+
+        try {
+            setAddingToCart(true);
+                const cartItem = {
+                productId: parseInt(id),
+                quantity: 1
+            };
+
+            let newCart;
+            if (cart && cart.products) {
+                const existingItemIndex = cart.products.findIndex(
+                    item => item.productId === parseInt(id)
+                );
+                
+                if (existingItemIndex > -1) {
+                    newCart = {
+                        ...cart,
+                        products: cart.products.map((item, index) => 
+                            index === existingItemIndex 
+                                ? { ...item, quantity: item.quantity + 1 }
+                                : item
+                        )
+                    };
+                } else {
+                    newCart = {
+                        ...cart,
+                        products: [...cart.products, cartItem]
+                    };
+                }
+            } else {
+                newCart = {
+                    id: Date.now(), 
+                    userId: user.id,
+                    date: new Date().toISOString().split('T')[0],
+                    products: [cartItem]
+                };
+            }
+
+            setCart(newCart);
+            setAddedToCart(true);
+            
+            setTimeout(() => setAddedToCart(false), 2000);
+
+        } catch (err) {
+            console.error('Error adding to cart:', err);
+            alert('Failed to add item to cart. Please try again.');
+        } finally {
+            setAddingToCart(false);
+        }
+    }
 
     return (
         <div className="container">
@@ -80,7 +146,13 @@ function ProductDetails() {
                                 </div>
                             </div>
 
-                            <div className="product-details-action btn btn-primary text-decoration-non">Add to cart</div>
+                            <button 
+                                onClick={addToCart}
+                                disabled={addingToCart || !user}
+                                className={`product-details-action btn ${addedToCart ? 'btn-success' : 'btn-primary'} text-decoration-none`}
+                            >
+                                {addingToCart ? 'Adding...' : addedToCart ? 'Added to Cart!' : 'Add to cart'}
+                            </button>
                             <Link to="/cart" id="goToCartBtn" className="product-details-action btn btn-warning text-decoration-none">
                                 Go to cart
                             </Link>
